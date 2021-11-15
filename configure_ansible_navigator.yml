@@ -1,0 +1,21 @@
+---
+- name: Set username in .ansible_navigator.yml
+  hosts: localhost
+  connection: local
+
+  tasks:
+
+  - name: Capture current user
+    command: whoami
+    register: username
+
+  - debug: 
+      var: username.stdout_lines[0]
+
+  - name: Update .ansible-navigator.yml user
+    replace: 
+      path: .ansible-navigator.yml
+      regexp: (?<=/)(USERNAME*?)(?=\/)
+      replace: "{{ username.stdout_lines[0] }}"
+      backup: yes
+    delegate_to: localhost

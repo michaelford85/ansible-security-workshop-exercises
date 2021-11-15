@@ -1,0 +1,15 @@
+---
+ansible-navigator:
+  ansible:
+    inventories:
+    - /home/USERNAME/lab_inventory/hosts
+
+  execution-environment:
+    image: quay.io/acme_corp/security_ee:latest
+    enabled: true
+    container-engine: podman
+    pull-policy: missing
+    volume-mounts:
+    - src: "/etc/ansible/"
+      dest: "/etc/ansible/"
+      label: "Z"
